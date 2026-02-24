@@ -1,0 +1,62 @@
+:root{
+  --bg:#0f172a; --panel:#0b1222; --card:#111827; --muted:#7c8aa5; --text:#e5e7eb;
+  --accent:#22d3ee; --green:#34d399; --chip:#1f2937; --danger:#ef4444; --line:#1f2937;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--panel);padding:18px 14px;display:flex;flex-direction:column;border-right:1px solid #0f1a30}
+.brand{font-weight:700;color:#cbd5e1;margin:8px 8px 16px}
+.brand .ver{font-size:12px;color:#94a3b8;margin-left:6px;border:1px solid #20304a;padding:2px 6px;border-radius:10px}
+.menu{display:flex;flex-direction:column;gap:6px}
+.menu .item{padding:10px 12px;color:#a9b4c6;text-decoration:none;border-radius:8px;cursor:pointer}
+.menu .item.active,.menu .item:hover{background:#0e1b31;color:#e5f3ff}
+.menu .sep{height:1px;background:#0f1f39;margin:10px 0}
+.account{margin-top:auto;border-top:1px solid #0f1f39;padding-top:12px}
+.account .email{font-size:12px;color:#8da0be}
+.account .role{font-size:10px;color:#8da0be;margin:6px 0}
+.logout{background:#11223f;color:#cde7ff;border:1px solid #1c355c;padding:8px 10px;border-radius:8px;cursor:pointer}
+.content{flex:1;padding:20px 24px}
+.page{display:none}
+.page.visible{display:block}
+.empty{opacity:.6;padding:40px;text-align:center}
+.timeline{max-width:960px;margin:0 auto;position:relative}
+.timeline:before{content:"";position:absolute;left:80px;top:0;bottom:0;width:2px;background:var(--line)}
+.group{position:relative;padding-left:120px;margin-bottom:26px}
+.group .date{color:#9fb0c8;margin:12px 0 2px 120px}
+.node{position:relative;margin:14px 0}
+.clock{position:absolute;left:0;top:0;width:80px;text-align:center;color:#9fb0c8;font-weight:600}
+.dot{position:absolute;left:88px;top:14px;width:10px;height:10px;background:#14b8a6;border-radius:50%;border:2px solid #083344}
+.card{background:var(--card);border:1px solid #1f2a44;border-radius:14px;padding:16px 16px 12px 16px;margin-left:120px}
+.title{font-weight:700;margin-bottom:6px;color:#dbeafe}
+.meta{font-size:12px;color:#8aa0c0;margin-bottom:8px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.badge{background:#0e213c;border:1px solid #1e3a5f;color:#bbd9ff;padding:3px 8px;border-radius:10px;font-size:12px}
+.score{margin-left:auto;background:#052e1f;border:1px solid #0a5b3a;color:#a7f3d0}
+.card-head{display:flex;align-items:flex-start;gap:8px;justify-content:space-between}
+.src{font-size:12px;color:#93b5d4;opacity:.9;margin-bottom:8px}
+.policy{max-width:1000px;margin:0 auto}
+.steps{list-style:none;margin:6px 0 18px 0;padding:0}
+.steps li{display:flex;gap:12px;margin:10px 0}
+.step-num{width:28px;height:28px;border-radius:50%;background:#0e213c;border:1px solid #1e3a5f;color:#bcd7ff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.step-title{font-weight:700;margin-bottom:6px}
+.step-desc{color:#9fb0c8;margin-bottom:4px}
+.chip{display:inline-block;background:var(--chip);color:#c7d2fe;border:1px solid #334155;padding:4px 8px;border-radius:10px;font-size:12px}
+.chip.red{color:#fecaca;border-color:#7f1d1d;background:#1b0f12}
+.table{border:1px solid #1f2a44;border-radius:12px;overflow:hidden}
+.thead,.trow{display:grid;grid-template-columns:1fr 1fr}
+.thead{background:#0e213c;color:#bcd7ff}
+.trow>div,.thead>div{padding:10px 12px;border-bottom:1px solid #1f2a44}
+
+/* buttons + source editor + inputs */
+.actions{display:flex;gap:8px}
+.btn{background:#103158;color:#cde7ff;border:1px solid #1e3a5f;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px}
+.btn:hover{background:#0f2745}
+.btn.ghost{background:transparent}
+.src-grid{display:grid;grid-template-columns:repeat(1,1fr);gap:12px}
+.ta{width:100%;height:120px;background:#0c1a2f;color:#dbeafe;border:1px solid #1e2f4b;border-radius:8px;padding:8px}
+.in{width:320px;max-width:100%;background:#0c1a2f;color:#dbeafe;border:1px solid #1e2f4b;border-radius:8px;padding:8px}
+.hint{color:#8aa0c0;font-size:12px;margin-left:8px}
+@media (min-width: 900px){
+  .src-grid{grid-template-columns:repeat(3,1fr)}
+}
