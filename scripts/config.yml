@@ -1,0 +1,43 @@
+youtube:
+  channels:
+    - UCXZCJLdBC09xxGZ6gcdrc6A  # Anthropic Research
+    - UCXZC4xOKwXW7w9C9YxB9Qgw  # OpenAI 示例
+  searches:
+    - "AI news"
+    - "LLM release"
+
+reddit:
+  subreddits:
+    - MachineLearning
+    - LocalLLaMA
+    - OpenAI
+    - StableDiffusion
+  sort: new
+  limit: 30
+
+twitter:
+  users:
+    - OpenAI
+    - anthropic
+    - StabilityAI
+    - MistralAI
+    - QwenLM
+    - googleaidev
+  searches:
+    - "AI release"
+    - "LLM benchmark"
+  nitter_hosts:
+    - https://nitter.net
+    - https://nitter.lacontrevoie.fr
+    - https://nitter.fdn.fr
+
+rules:
+  ai_relevance_min: 60
+  enforce_model_selected: false
+  importance_floor:
+    default: 75
+    model_release: 85
+    paper: 84
+    benchmark: 82
+    industry: 80
+    devtool: 88
