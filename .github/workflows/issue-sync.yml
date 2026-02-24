@@ -1,0 +1,62 @@
+name: Issue Sync
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+jobs:
+  apply:
+    if: >
+      startsWith(github.event.issue.title, '[fav]') ||
+      startsWith(github.event.issue.title, '[rate]') ||
+      startsWith(github.event.issue.title, '[unfav]') ||
+      startsWith(github.event.issue.title, '[sources]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+
+      - name: Install deps for sync
+        run: pip install PyYAML
+
+      - name: Write issue payload
+        run: |
+          echo '${{ toJson(github.event.issue) }}' > issue.json
+
+      - name: Apply changes
+        run: |
+          python scripts/issue_sync.py issue.json
+          echo "changed files:"; git status --porcelain
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/public/userdata/** scripts/config.yml web/public/sources.json || true
+          git commit -m "chore(sync): apply issue #${{ github.event.issue.number }}" || echo "nothing to commit"
+          git push
+
+      - name: Comment and close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const num = context.payload.issue.number;
+            await github.rest.issues.createComment({ ...context.repo, issue_number: num, body: "已同步并部署到 GitHub Pages。" });
+            await github.rest.issues.update({ ...context.repo, issue_number: num, state: "closed" });
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
