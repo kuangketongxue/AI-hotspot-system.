@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI热点终端</title>
+  <link rel="icon" href="./favicon.ico">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">AI热点终端 <span class="ver">v1</span></div>
+    <nav class="menu">
+      <a class="item active" data-page="hot">AI热点</a>
+      <a class="item" data-page="low">低阶爆文</a>
+      <a class="item" data-page="video">视频监控</a>
+      <a class="item" data-page="fav">收藏</a>
+      <a class="item" data-page="source">信源</a>
+      <div class="sep"></div>
+      <a class="item" data-page="system">系统</a>
+      <a class="item" data-page="policy">精选策略</a>
+      <a class="item" data-page="user">用户</a>
+    </nav>
+    <div class="account">
+      <div class="email" id="acct-email">未设置</div>
+      <div class="role">GITHUB</div>
+      <button class="logout" id="btn-clear-login">清除用户</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <section id="page-hot" class="page visible">
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <section id="page-fav" class="page">
+      <div class="timeline"><div id="fav-list"></div></div>
+    </section>
+
+    <section id="page-source" class="page">
+      <div class="card policy">
+        <h3>来源管理</h3>
+        <div class="src-grid">
+          <div>
+            <div class="step-title">YouTube Channel IDs（每行一个）</div>
+            <textarea id="src-yt" class="ta" placeholder="UC..."></textarea>
+          </div>
+          <div>
+            <div class="step-title">Reddit Subreddits（每行一个）</div>
+            <textarea id="src-rd" class="ta" placeholder="MachineLearning"></textarea>
+          </div>
+          <div>
+            <div class="step-title">Twitter 用户（每行一个）</div>
+            <textarea id="src-tw" class="ta" placeholder="OpenAI"></textarea>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn" onclick="submitSources()">保存并提交PR</button>
+          <span class="hint">将打开预填好的 GitHub Issue，提交后会自动更新并部署</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-policy" class="page">
+      <div class="card policy">
+        <h3>精选决策流水线</h3>
+        <ol class="steps">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">非 AI 分类过滤</div>
+              <div class="step-desc">“非AI/通用工具”等不相关内容不会进入精选。</div>
+              <span class="chip red">× 分类 = 非AI/通用工具 → 永不精选</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">AI 相关性硬拦截</div>
+              <div class="step-desc">LLM 词典与大厂词综合评估 [0-100]。</div>
+              <span class="chip red">× ai_relevance &lt; 60 → 硬拦截</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">模型精选结果拦截</div>
+              <div class="step-desc">若开启，仅保留“重大发布/版本/评测”等强信号。</div>
+              <span class="chip red">× model_selected != true → 硬拦截</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">重要性硬门槛</div>
+              <div class="step-desc">按分类设定 importance 下限，论文/评测/行业动态等更严格。</div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="table">
+          <div class="thead">
+            <div>分类</div><div>importance 下限</div>
+          </div>
+          <div class="trow"><div>默认</div><div>75</div></div>
+          <div class="trow"><div>模型发布</div><div>85</div></div>
+          <div class="trow"><div>论文/研究</div><div>84</div></div>
+          <div class="trow"><div>评测/Benchmark</div><div>82</div></div>
+          <div class="trow"><div>行业动态/监管/其他</div><div>80</div></div>
+          <div class="trow"><div>DevTool</div><div>88</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-low" class="page"><div class="empty">开发中</div></section>
+    <section id="page-video" class="page"><div class="empty">开发中</div></section>
+    <section id="page-system" class="page"><div class="empty">开发中</div></section>
+
+    <section id="page-user" class="page">
+      <div class="card policy">
+        <h3>用户设置</h3>
+        <div class="step-title">GitHub 用户名</div>
+        <input id="gh-login-input" class="in" placeholder="例如: wzglyay">
+        <div style="margin-top:10px">
+          <button class="btn" id="btn-save-login">保存</button>
+          <span class="hint">用于按 GitHub 用户隔离收藏/评分数据。仅在本地存储，不会上传。</span>
+        </div>
+        <div style="margin-top:10px" class="hint">收藏/评分动作会在 GitHub 新建 Issue（你需要登录 GitHub），后台自动合并到 <code>web/public/userdata/&lt;你的用户名&gt;.json</code> 并部署。</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
